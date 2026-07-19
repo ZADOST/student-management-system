@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import './AdminDashboard.css';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  department: string;
+}
 
 const AdminDashboard = () => {
   const { user } = useAuth();
 
-  // MOCK SYSTEM STATS
   const stats = {
     totalStudents: 1245,
     activeFaculty: 84,
@@ -13,28 +19,27 @@ const AdminDashboard = () => {
     serverUptime: "99.9%"
   };
 
-  // MOCK USER DIRECTORY
-  const [users, setUsers] = useState([
+  const [users, setUsers] = useState<User[]>([
     { id: 1, name: "Abdulrahman Jakhsi", email: "a.jakhsi@tiu.edu.iq", role: "teacher", department: "Computer Education" },
     { id: 2, name: "Akar Shwan", email: "akar.shwan@std.tiu.edu.iq", role: "student", department: "Computer Education" },
     { id: 3, name: "Zina Mohammed", email: "zina.m@std.tiu.edu.iq", role: "student", department: "Computer Education" },
     { id: 4, name: "System Administrator", email: "admin@tiu.edu.iq", role: "admin", department: "IT Support" }
   ]);
 
-  const handleDeleteUser = (userId, userName) => {
+  // Types added to parameters: userId is a number, userName is a string
+  const handleDeleteUser = (userId: number, userName: string) => {
     if (window.confirm(`Are you sure you want to permanently delete ${userName}'s account? This action cannot be undone.`)) {
       setUsers(users.filter(u => u.id !== userId));
-      // Tomorrow: Axios DELETE request to /api/admin/users/{userId}
     }
   };
 
-  const handleChangeRole = (userId, currentRole) => {
+  // Types added to parameters: userId is a number, currentRole is a string
+  const handleChangeRole = (userId: number, currentRole: string) => {
     const roles = ["student", "teacher", "admin"];
     const currentIndex = roles.indexOf(currentRole);
     const nextRole = roles[(currentIndex + 1) % roles.length];
     
     setUsers(users.map(u => u.id === userId ? { ...u, role: nextRole } : u));
-    // Tomorrow: Axios PATCH request to /api/admin/users/{userId}/role
   };
 
   return (
@@ -134,13 +139,5 @@ const AdminDashboard = () => {
     </div>
   );
 };
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-  department: string;
-}
-const [users, setUsers] = useState<User[]>([]);
 
 export default AdminDashboard;

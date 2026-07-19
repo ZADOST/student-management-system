@@ -2,33 +2,42 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import './TeacherDashboard.css';
 
+// Define the blueprint for a student row
+interface RosterStudent {
+  id: string;
+  name: string;
+  attendance: string;
+  grade: string;
+}
+
 const TeacherDashboard = () => {
   const { user } = useAuth();
-  const [activeCourse, setActiveCourse] = useState("CE302");
+  const [activeCourse, setActiveCourse] = useState<string>("CE302");
 
-  // MOCK DATA: Simulating a class roster in the Computer Education department
-  const [roster, setRoster] = useState([
+  // Apply the interface to the state array
+  const [roster, setRoster] = useState<RosterStudent[]>([
     { id: "202601", name: "Akar Shwan", attendance: "Present", grade: "92" },
     { id: "202602", name: "Zina Mohammed", attendance: "Present", grade: "88" },
     { id: "202603", name: "Alaa Abdullah", attendance: "Late", grade: "75" },
     { id: "202604", name: "Mohammed Ali", attendance: "Absent", grade: "60" }
   ]);
 
-  // Handle local state changes for inputs before sending to DB
-  const handleGradeChange = (id, newGrade) => {
+  // Types added to parameters: id is a string, newGrade is a string
+  const handleGradeChange = (id: string, newGrade: string) => {
     setRoster(roster.map(student => 
       student.id === id ? { ...student, grade: newGrade } : student
     ));
   };
 
-  const handleAttendanceChange = (id, newStatus) => {
+  // Types added to parameters
+  const handleAttendanceChange = (id: string, newStatus: string) => {
     setRoster(roster.map(student => 
       student.id === id ? { ...student, attendance: newStatus } : student
     ));
   };
 
-  const saveChanges = (studentName) => {
-    // Tomorrow, this will trigger an Axios PUT request to your backend
+  // Types added to parameter
+  const saveChanges = (studentName: string) => {
     alert(`Changes securely saved to the database for ${studentName}.`);
   };
 

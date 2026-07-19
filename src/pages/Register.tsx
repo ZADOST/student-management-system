@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Register.css';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -14,21 +13,22 @@ const Register = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e) => {
+  // Type added here: It accepts changes from either an input field or a select dropdown
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleRegister = async (e) => {
+  // Type added here: FormEvent prevents the implicit 'any' error
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // MOCK BACKEND CALL: Tomorrow, you will replace this block with an axios.post() to your PHP/Node backend
     try {
       console.log("Sending data to database:", formData);
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 1000)); 
       
       alert("Registration successful! Please log in.");
       navigate('/login');
