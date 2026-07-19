@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import './StudentDashboard.css';
+
 
 const StudentDashboard = () => {
   const { user } = useAuth();
