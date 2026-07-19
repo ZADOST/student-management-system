@@ -3,16 +3,16 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
-// Import our pages
+// Import all application pages
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import StudentDashboard from './pages/StudentDashboard';
-import TeacherDashboard from './pages/TeacherDashboard'; // <-- NEW IMPORT
+import TeacherDashboard from './pages/TeacherDashboard';
+import AdminDashboard from './pages/AdminDashboard'; // <-- NEW IMPORT
 
-// Mock components for the remaining dashboard
+// Fallback component
 const Unauthorized = () => <div className="p-6 text-red-600 text-xl font-bold">403 - Unauthorized Access</div>;
-const AdminDashboard = () => <div className="p-6 text-xl font-bold text-purple-700">Admin Dashboard - Full Access</div>;
 
 // The Navigation Bar
 const NavBar = () => {
