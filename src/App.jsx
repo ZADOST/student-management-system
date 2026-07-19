@@ -6,8 +6,7 @@ import Login from './pages/Login';
 
 // Mock components for demonstration
 const Unauthorized = () => <div className="p-6 text-red-600 text-xl font-bold">403 - Unauthorized Access</div>;
-import StaticStudentList from './pages/StaticStudentList';
-const PublicHome = () => <StaticStudentList />;
+const PublicHome = () => <div className="p-6 text-xl">Welcome to the Student Management System. Please log in.</div>;
 const AdminDashboard = () => <div className="p-6 text-xl font-bold text-purple-700">Admin Dashboard - Full Access</div>;
 const TeacherDashboard = () => <div className="p-6 text-xl font-bold text-green-700">Teacher Dashboard - Gradebook Access</div>;
 const StudentDashboard = () => <div className="p-6 text-xl font-bold text-blue-700">Student Dashboard - View Only</div>;
@@ -51,19 +50,16 @@ function App() {
               {/* Protected Routes: ADMIN ONLY */}
               <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
                 <Route path="/admin" element={<AdminDashboard />} />
-                {/* Add more admin routes here (e.g., /admin/settings) */}
               </Route>
 
               {/* Protected Routes: TEACHERS & ADMINS */}
               <Route element={<ProtectedRoute allowedRoles={['admin', 'teacher']} />}>
                 <Route path="/teacher" element={<TeacherDashboard />} />
-                {/* Teachers and admins can both access gradebooks, for example */}
               </Route>
 
               {/* Protected Routes: STUDENTS ONLY */}
               <Route element={<ProtectedRoute allowedRoles={['student']} />}>
                 <Route path="/student" element={<StudentDashboard />} />
-                {/* Add more student routes here (e.g., /student/schedule) */}
               </Route>
               
             </Routes>
