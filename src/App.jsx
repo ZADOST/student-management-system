@@ -7,12 +7,12 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import StudentDashboard from './pages/StudentDashboard'; // <-- NEW IMPORT
+import StudentDashboard from './pages/StudentDashboard';
+import TeacherDashboard from './pages/TeacherDashboard'; // <-- NEW IMPORT
 
-// Mock components for the other dashboards
+// Mock components for the remaining dashboard
 const Unauthorized = () => <div className="p-6 text-red-600 text-xl font-bold">403 - Unauthorized Access</div>;
 const AdminDashboard = () => <div className="p-6 text-xl font-bold text-purple-700">Admin Dashboard - Full Access</div>;
-const TeacherDashboard = () => <div className="p-6 text-xl font-bold text-green-700">Teacher Dashboard - Gradebook Access</div>;
 
 // The Navigation Bar
 const NavBar = () => {
