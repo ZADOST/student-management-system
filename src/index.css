@@ -1,26 +1,54 @@
 /* =========================================
-   1. GLOBAL THEME VARIABLES
+   1. PREMIUM LOCALIZED FONTS IMPORT
    ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Vazirmatn:wght@300;400;600;700;800&display=swap');
+
 :root {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #ffffff;
+  /* Light Mode Palette */
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
   --text-primary: #0f172a;
-  --text-secondary: #64748b;
+  --text-secondary: #475569;
+  
   --accent: #2563eb; 
   --accent-hover: #1d4ed8;
-  --border: #e2e8f0;
+  --border: rgba(226, 232, 240, 0.8);
+  
+  /* LTR Modern Font Stack */
+  --font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 [data-theme='dark'] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
+  /* Dark Mode Palette */
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  --glass-bg: rgba(30, 41, 59, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.1);
   --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --border: #334155;
+  --text-secondary: #94a3b8;
+  
+  --accent: #3b82f6; 
+  --accent-hover: #60a5fa;
+  --border: rgba(51, 65, 85, 0.8);
 }
 
 /* =========================================
-   2. BASE HTML ELEMENTS
+   2. RTL ADVANCED TYPOGRAPHY OVERRIDE
+   ========================================= */
+[dir='rtl'] {
+  /* Premium Academic RTL Font Stack */
+  --font-family: 'Vazirmatn', 'Alexandria', sans-serif;
+  letter-spacing: 0;
+}
+
+/* Accent headers look incredible using Alexandria font */
+[dir='rtl'] h1, [dir='rtl'] h2, [dir='rtl'] h3 {
+  font-family: 'Alexandria', sans-serif;
+  font-weight: 700;
+}
+
+/* =========================================
+   3. BASE HTML ELEMENTS
    ========================================= */
 * {
   box-sizing: border-box;
@@ -29,14 +57,20 @@
 }
 
 body {
-  background-color: var(--bg-primary);
+  background: var(--bg-gradient);
+  background-attachment: fixed;
   color: var(--text-primary);
-  font-family: system-ui, -apple-system, sans-serif;
-  transition: background-color 0.3s, color 0.3s;
+  font-family: var(--font-family);
+  transition: background 0.4s ease, color 0.4s ease;
+  min-height: 100vh;
+  
+  /* Font smoothing for ultra-crisp display on high-res laptops */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* =========================================
-   3. SHARED COMPONENT CLASSES
+   4. SHARED GLASSMORPHISM CLASSES
    ========================================= */
 .container {
   max-width: 1200px;
@@ -44,12 +78,46 @@ body {
   padding: 2rem;
 }
 
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
 .card {
-  background-color: var(--bg-secondary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Buttons & Badges */
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
 
 .badge {
@@ -58,12 +126,68 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
 }
-.badge.present { background-color: #dcfce7; color: #166534; }
-.badge.absent { background-color: #fee2e2; color: #991b1b; }
-.badge.late { background-color: #fef9c3; color: #854d0e; }
+.badge.present { background-color: rgba(34, 197, 94, 0.15); color: #22c55e; }
+.badge.absent { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.badge.late { background-color: rgba(245, 158, 11, 0.15); color: #f59e0b; }
 
 /* =========================================
-   4. HOME PAGE (.hero)
+   5. ELEGANT NAVBAR
+   ========================================= */
+.elegant-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.nav-brand {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-item {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-item:hover {
+  color: var(--accent);
+}
+
+.settings-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.setting-select {
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-family: var(--font-family);
+  cursor: pointer;
+  outline: none;
+}
+
+/* =========================================
+   6. HOME PAGE
    ========================================= */
 .home-wrapper {
   display: flex;
@@ -71,13 +195,8 @@ body {
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 74px);
-  background: linear-gradient(135deg, var(--bg-primary) 0%, #e0e7ff 100%);
   text-align: center;
   padding: 2rem;
-}
-
-[data-theme='dark'] .home-wrapper {
-  background: linear-gradient(135deg, var(--bg-primary) 0%, #1e1b4b 100%);
 }
 
 .hero-title {
@@ -85,7 +204,6 @@ body {
   font-weight: 800;
   color: var(--text-primary);
   margin-bottom: 1.5rem;
-  letter-spacing: -1.5px;
   line-height: 1.2;
 }
 
@@ -104,28 +222,11 @@ body {
   justify-content: center;
 }
 
-.btn-primary-large {
-  padding: 1rem 2.5rem;
-  background: var(--accent);
-  color: white;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
-}
-
-.btn-primary-large:hover {
-  background: var(--accent-hover);
-  transform: translateY(-2px);
-}
-
 .btn-secondary-large {
   padding: 1rem 2.5rem;
   background: transparent;
-  color: var(--accent);
-  border: 2px solid var(--accent);
+  color: var(--text-primary);
+  border: 2px solid var(--border);
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -134,34 +235,31 @@ body {
 }
 
 .btn-secondary-large:hover {
-  background: rgba(37, 99, 235, 0.05);
+  background: var(--glass-border);
   transform: translateY(-2px);
 }
 
 /* =========================================
-   5. AUTHENTICATION (Login & Register)
+   7. AUTHENTICATION (Login & Register)
    ========================================= */
 .login-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, #dbeafe 100%);
+  min-height: calc(100vh - 74px);
   padding: 1rem;
 }
 
-[data-theme='dark'] .login-wrapper {
-  background: linear-gradient(135deg, var(--bg-primary) 0%, #1e1b4b 100%);
-}
-
 .login-card {
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 2.5rem;
   border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 420px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   opacity: 0;
   transform: translateY(30px);
   animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -172,22 +270,19 @@ body {
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 74px);
-  background: linear-gradient(135deg, var(--bg-primary) 0%, #f3e8ff 100%);
   padding: 2rem 1rem;
 }
 
-[data-theme='dark'] .register-wrapper {
-  background: linear-gradient(135deg, var(--bg-primary) 0%, #2e1065 100%);
-}
-
 .register-card {
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 2.5rem;
   border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 550px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   opacity: 0;
   transform: translateY(30px);
   animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -241,9 +336,9 @@ body {
 .login-input, .register-input {
   width: 100%;
   padding: 0.875rem 1rem;
-  border: 2px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   color: var(--text-primary);
   transition: all 0.3s ease;
   box-sizing: border-box;
@@ -280,7 +375,7 @@ body {
 }
 
 /* =========================================
-   6. STUDENT DASHBOARD
+   8. STUDENT DASHBOARD
    ========================================= */
 .dashboard-wrapper {
   padding: 2rem;
@@ -291,7 +386,7 @@ body {
 .dashboard-header {
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .dashboard-header h1 {
@@ -314,11 +409,13 @@ body {
 }
 
 .stat-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease;
@@ -356,12 +453,14 @@ body {
 }
 
 .course-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-left: 5px solid var(--accent);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-inline-start: 5px solid var(--accent);
   border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .course-card h3 {
@@ -371,7 +470,7 @@ body {
 
 .course-code {
   display: inline-block;
-  background: var(--bg-primary);
+  background: rgba(0, 0, 0, 0.04);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-size: 0.85rem;
@@ -380,17 +479,21 @@ body {
   font-family: monospace;
 }
 
+[data-theme='dark'] .course-code {
+  background: rgba(255, 255, 255, 0.04);
+}
+
 .course-details {
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--glass-border);
   padding-top: 1rem;
   font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
 /* =========================================
-   7. TEACHER DASHBOARD
+   9. TEACHER DASHBOARD
    ========================================= */
 .faculty-wrapper {
   padding: 2rem;
@@ -404,7 +507,7 @@ body {
   align-items: flex-end;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .faculty-header h1 {
@@ -415,9 +518,9 @@ body {
 
 .course-selector {
   padding: 0.75rem 1rem;
-  border: 2px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
   color: var(--text-primary);
   font-size: 1rem;
   font-weight: 600;
@@ -428,10 +531,12 @@ body {
 .course-selector:focus { border-color: var(--accent); }
 
 .roster-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   overflow: hidden;
 }
 
@@ -441,23 +546,35 @@ body {
   text-align: left;
 }
 
+[dir='rtl'] .roster-table {
+  text-align: right;
+}
+
 .roster-table th {
-  background: var(--bg-primary);
+  background: rgba(0, 0, 0, 0.02);
   padding: 1rem 1.5rem;
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-secondary);
-  border-bottom: 2px solid var(--border);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+[data-theme='dark'] .roster-table th {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+[dir='rtl'] .roster-table th {
+  text-align: right;
 }
 
 .roster-table td {
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--glass-border);
   vertical-align: middle;
 }
 
-.roster-table tr:hover { background: rgba(37, 99, 235, 0.02); }
+.roster-table tr:hover { background: rgba(37, 99, 235, 0.05); }
 
 .student-name { font-weight: 600; }
 .student-id {
@@ -473,7 +590,7 @@ body {
   border-radius: 6px;
   text-align: center;
   font-weight: 600;
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   color: var(--text-primary);
 }
 
@@ -483,7 +600,7 @@ body {
   padding: 0.5rem;
   border: 1px solid var(--border);
   border-radius: 6px;
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   font-weight: 600;
   cursor: pointer;
 }
@@ -506,7 +623,7 @@ body {
 .save-btn:hover { background: var(--accent-hover); }
 
 /* =========================================
-   8. ADMIN DASHBOARD
+   10. ADMIN DASHBOARD
    ========================================= */
 .admin-wrapper {
   padding: 2rem;
@@ -520,7 +637,7 @@ body {
   align-items: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .admin-header h1 {
@@ -533,13 +650,16 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #dcfce7;
-  color: #166534;
+  background: rgba(22, 163, 74, 0.1);
+  color: #16a34a;
+  border: 1px solid rgba(22, 163, 74, 0.2);
   padding: 0.5rem 1rem;
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.9rem;
 }
+
+[data-theme='dark'] .system-status { color: #4ade80; }
 
 .status-dot {
   width: 10px;
@@ -563,11 +683,13 @@ body {
 }
 
 .admin-stat-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   border-top: 4px solid var(--accent);
 }
 
@@ -596,17 +718,19 @@ body {
 }
 
 .admin-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .admin-card h2 {
   margin: 0 0 1.5rem 0;
   font-size: 1.5rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--glass-border);
   padding-bottom: 0.75rem;
 }
 
@@ -615,19 +739,24 @@ body {
   border-collapse: collapse;
 }
 
+[dir='rtl'] .user-table { text-align: right; }
+
 .user-table th {
   text-align: left;
   padding: 1rem;
-  background: var(--bg-primary);
+  background: rgba(0, 0, 0, 0.02);
   color: var(--text-secondary);
   font-size: 0.85rem;
   text-transform: uppercase;
-  border-bottom: 2px solid var(--border);
+  border-bottom: 1px solid var(--glass-border);
 }
+
+[data-theme='dark'] .user-table th { background: rgba(255, 255, 255, 0.02); }
+[dir='rtl'] .user-table th { text-align: right; }
 
 .user-table td {
   padding: 1rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--glass-border);
   vertical-align: middle;
 }
 
@@ -639,9 +768,13 @@ body {
   text-transform: capitalize;
 }
 
-.role-admin { background: #f3e8ff; color: #7e22ce; }
-.role-teacher { background: #e0e7ff; color: #4338ca; }
-.role-student { background: #dbeafe; color: #1d4ed8; }
+.role-admin { background: rgba(126, 34, 206, 0.1); color: #9333ea; border: 1px solid rgba(126, 34, 206, 0.2); }
+.role-teacher { background: rgba(67, 56, 202, 0.1); color: #4f46e5; border: 1px solid rgba(67, 56, 202, 0.2); }
+.role-student { background: rgba(29, 78, 216, 0.1); color: #2563eb; border: 1px solid rgba(29, 78, 216, 0.2); }
+
+[data-theme='dark'] .role-admin { color: #c084fc; }
+[data-theme='dark'] .role-teacher { color: #818cf8; }
+[data-theme='dark'] .role-student { color: #60a5fa; }
 
 .action-btn {
   padding: 0.4rem 0.8rem;
@@ -653,11 +786,11 @@ body {
   font-weight: 600;
   color: var(--text-secondary);
   transition: all 0.2s;
-  margin-right: 0.5rem;
+  margin-inline-end: 0.5rem;
 }
 
-.action-btn:hover { background: var(--bg-primary); color: var(--text-primary); }
-.action-btn.delete:hover { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
+.action-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+.action-btn.delete:hover { background: rgba(220, 38, 38, 0.1); color: #ef4444; border-color: rgba(220, 38, 38, 0.3); }
 
 .audit-log {
   list-style: none;
@@ -667,7 +800,7 @@ body {
 
 .audit-item {
   padding: 1rem 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .audit-item:last-child { border-bottom: none; }
@@ -679,7 +812,4 @@ body {
   display: block;
 }
 
-.audit-message {
-  font-size: 0.95rem;
-  margin: 0;
-}
+.audit-message { font-size: 0.95rem; margin: 0; }

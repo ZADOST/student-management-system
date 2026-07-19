@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useSettings } from '../context/SettingsContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -9,19 +10,16 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const { login } = useAuth();
+  const { t } = useSettings();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/';
-
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     try {
-      // Small artificial delay to show the button animation/state
       await new Promise(resolve => setTimeout(resolve, 800));
-      
       await login(email, password, selectedRole);
       
       if (selectedRole === 'admin') navigate('/admin');
@@ -40,37 +38,42 @@ const Login = () => {
       <div className="login-card">
         
         <div className="login-header">
-          <h2>Welcome Back</h2>
-          <p>Sign in to the Student Management System</p>
+          <h2>{t('welcomeBack')}</h2>
+          <p>{t('signInTo')}</p>
         </div>
 
         <form onSubmit={handleLogin}>
           <div className="input-group">
-            <label>Academic Email</label>
+            <label>{t('academicEmail')}</label>
+            {/* Force LTR direction for typing English emails */}
             <input 
               type="email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="login-input"
-              placeholder="e.g., student@university.edu.iq"
+              dir="ltr"
+              style={{ textAlign: 'start' }}
+              placeholder="student@university.edu.iq"
               required 
             />
           </div>
 
           <div className="input-group">
-            <label>Password</label>
+            <label>{t('password')}</label>
+            {/* Force LTR direction for typing passwords */}
             <input 
               type="password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="login-input"
-              placeholder="Enter your secure password"
+              dir="ltr"
+              style={{ textAlign: 'start' }}
               required 
             />
           </div>
 
           <div className="input-group">
-            <label>System Role (Test Mode)</label>
+            <label>{t('testRole')}</label>
             <select 
               value={selectedRole} 
               onChange={(e) => setSelectedRole(e.target.value)}
@@ -87,7 +90,7 @@ const Login = () => {
             className="login-btn-animated"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Authenticating...' : 'Sign In securely'}
+            {isSubmitting ? t('authenticating') : t('signInSecurely')}
           </button>
         </form>
 

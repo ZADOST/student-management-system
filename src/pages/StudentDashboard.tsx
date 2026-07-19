@@ -1,13 +1,13 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-
+import { useSettings } from '../context/SettingsContext';
 
 const StudentDashboard = () => {
   const { user } = useAuth();
+  const { t } = useSettings();
 
-  // MOCK DATA: Tomorrow, this will be replaced by an API call fetching your specific university data
   const studentProfile = {
-    name: user?.name || "Student Name",
+    name: user?.name || "Demo User",
     id: "20260145",
     department: "Computer Education",
     gpa: "3.65",
@@ -17,43 +17,41 @@ const StudentDashboard = () => {
 
   const currentCourses = [
     { id: 1, title: "Project-Based Learning", code: "CE302", professor: "Dr. Ahmed", time: "Mon/Wed 10:00 AM" },
-    { id: 2, title: "Web Application Development", code: "CE315", professor: "Mr. Karwan", time: "Tue/Thu 01:00 PM" },
-    { id: 3, title: "Micro-teaching Practicum", code: "EDU401", professor: "Dr. Fatima", time: "Mon 02:30 PM" },
-    { id: 4, title: "Database Management Systems", code: "CE208", professor: "Mr. Dler", time: "Wed/Thu 09:00 AM" }
+    { id: 2, title: "Web Application Development", code: "CE315", professor: "Mr. Karwan", time: "Tue/Thu 01:00 PM" }
   ];
 
   return (
     <div className="dashboard-wrapper">
       <div className="dashboard-header">
-        <h1>Welcome back, {studentProfile.name}</h1>
-        <p>Student ID: {studentProfile.id} | Department: {studentProfile.department}</p>
+        <h1>{t('welcome')}, {studentProfile.name}</h1>
+        <p>{t('studentId')}: <span style={{ direction: 'ltr', display: 'inline-block' }}>{studentProfile.id}</span> | {t('department')}: {studentProfile.department}</p>
       </div>
 
       <div className="stats-grid">
         <div className="stat-card">
-          <span className="stat-title">Cumulative GPA</span>
+          <span className="stat-title">{t('cumGpa')}</span>
           <p className="stat-value">{studentProfile.gpa}</p>
         </div>
         <div className="stat-card">
-          <span className="stat-title">Credits Earned</span>
+          <span className="stat-title">{t('creditsEarned')}</span>
           <p className="stat-value">{studentProfile.credits}</p>
         </div>
         <div className="stat-card">
-          <span className="stat-title">Overall Attendance</span>
-          <p className="stat-value">{studentProfile.attendance}</p>
+          <span className="stat-title">{t('overallAttendance')}</span>
+          <p className="stat-value" style={{ direction: 'ltr' }}>{studentProfile.attendance}</p>
         </div>
       </div>
 
       <div className="courses-section">
-        <h2>Current Semester Courses</h2>
+        <h2>{t('currentCourses')}</h2>
         <div className="courses-grid">
           {currentCourses.map(course => (
             <div key={course.id} className="course-card">
               <h3>{course.title}</h3>
-              <span className="course-code">{course.code}</span>
+              <span className="course-code" style={{ direction: 'ltr', display: 'inline-block' }}>{course.code}</span>
               <div className="course-details">
                 <span>👨‍🏫 {course.professor}</span>
-                <span>⏱️ {course.time}</span>
+                <span style={{ direction: 'ltr' }}>⏱️ {course.time}</span>
               </div>
             </div>
           ))}

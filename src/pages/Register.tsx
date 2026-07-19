@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSettings } from '../context/SettingsContext';
 
 const Register = () => {
   const navigate = useNavigate();
+  const { t } = useSettings();
+  
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -13,7 +16,6 @@ const Register = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Type added here: It accepts changes from either an input field or a select dropdown
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
@@ -21,15 +23,12 @@ const Register = () => {
     });
   };
 
-  // Type added here: FormEvent prevents the implicit 'any' error
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     try {
-      console.log("Sending data to database:", formData);
-      await new Promise(resolve => setTimeout(resolve, 1000)); 
-      
+      await new Promise(resolve => setTimeout(resolve, 1000));
       alert("Registration successful! Please log in.");
       navigate('/login');
     } catch (error) {
@@ -44,46 +43,46 @@ const Register = () => {
       <div className="register-card">
         
         <div className="register-header">
-          <h2>Create an Account</h2>
-          <p>Register your official university credentials</p>
+          <h2>{t('createAccount')}</h2>
+          <p>{t('registerCreds')}</p>
         </div>
 
         <form onSubmit={handleRegister} className="form-grid">
           
           <div className="input-group">
-            <label>First Name</label>
+            <label>{t('firstName')}</label>
             <input 
               type="text" name="firstName" value={formData.firstName} onChange={handleChange}
-              className="register-input" placeholder="First Name" required 
+              className="register-input" required 
             />
           </div>
 
           <div className="input-group">
-            <label>Last Name</label>
+            <label>{t('lastName')}</label>
             <input 
               type="text" name="lastName" value={formData.lastName} onChange={handleChange}
-              className="register-input" placeholder="Last Name" required 
+              className="register-input" required 
             />
           </div>
 
           <div className="input-group full-width">
-            <label>University ID Number</label>
+            <label>{t('univId')}</label>
             <input 
               type="text" name="universityId" value={formData.universityId} onChange={handleChange}
-              className="register-input" placeholder="e.g., 20260100" required 
+              className="register-input" dir="ltr" style={{ textAlign: 'start' }} placeholder="e.g., 20260100" required 
             />
           </div>
 
           <div className="input-group full-width">
-            <label>Academic Email</label>
+            <label>{t('academicEmail')}</label>
             <input 
               type="email" name="email" value={formData.email} onChange={handleChange}
-              className="register-input" placeholder="student@tiu.edu.iq" required 
+              className="register-input" dir="ltr" style={{ textAlign: 'start' }} placeholder="student@tiu.edu.iq" required 
             />
           </div>
 
           <div className="input-group full-width">
-            <label>Department</label>
+            <label>{t('dept')}</label>
             <select 
               name="department" value={formData.department} onChange={handleChange}
               className="register-input"
@@ -95,16 +94,16 @@ const Register = () => {
           </div>
 
           <div className="input-group full-width">
-            <label>Password</label>
+            <label>{t('password')}</label>
             <input 
               type="password" name="password" value={formData.password} onChange={handleChange}
-              className="register-input" placeholder="Create a strong password" required 
+              className="register-input" dir="ltr" style={{ textAlign: 'start' }} required 
             />
           </div>
 
           <div className="full-width">
             <button type="submit" className="register-btn-animated" disabled={isSubmitting}>
-              {isSubmitting ? 'Creating Account...' : 'Complete Registration'}
+              {isSubmitting ? t('authenticating') : t('completeReg')}
             </button>
           </div>
 
