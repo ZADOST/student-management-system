@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import Footer from './components/Footer'; // <-- Add this import
 
 // Import all application pages
 import Home from './pages/Home';
@@ -72,10 +73,12 @@ function App() {
               
             </Routes>
           </main>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
   );
 }
+
 
 export default App;

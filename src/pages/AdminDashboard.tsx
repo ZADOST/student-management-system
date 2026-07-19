@@ -134,5 +134,13 @@ const AdminDashboard = () => {
     </div>
   );
 };
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  department: string;
+}
+const [users, setUsers] = useState<User[]>([]);
 
 export default AdminDashboard;
