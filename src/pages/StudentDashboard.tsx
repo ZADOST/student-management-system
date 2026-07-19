@@ -24,21 +24,23 @@ const StudentDashboard = () => {
     <div className="dashboard-wrapper">
       <div className="dashboard-header">
         <h1>{t('welcome')}, {studentProfile.name}</h1>
-        <p>{t('studentId')}: <span style={{ direction: 'ltr', display: 'inline-block' }}>{studentProfile.id}</span> | {t('department')}: {studentProfile.department}</p>
+        {/* Removed the manual LTR direction so RTL numerals render naturally */}
+        <p>{t('studentId')}: {t(studentProfile.id)} | {t('department')}: {studentProfile.department}</p>
       </div>
 
       <div className="stats-grid">
         <div className="stat-card">
           <span className="stat-title">{t('cumGpa')}</span>
-          <p className="stat-value">{studentProfile.gpa}</p>
+          {/* Numbers are explicitly wrapped in the translator */}
+          <p className="stat-value">{t(studentProfile.gpa)}</p>
         </div>
         <div className="stat-card">
           <span className="stat-title">{t('creditsEarned')}</span>
-          <p className="stat-value">{studentProfile.credits}</p>
+          <p className="stat-value">{t(studentProfile.credits)}</p>
         </div>
         <div className="stat-card">
           <span className="stat-title">{t('overallAttendance')}</span>
-          <p className="stat-value" style={{ direction: 'ltr' }}>{studentProfile.attendance}</p>
+          <p className="stat-value">{t(studentProfile.attendance)}</p>
         </div>
       </div>
 
@@ -48,10 +50,10 @@ const StudentDashboard = () => {
           {currentCourses.map(course => (
             <div key={course.id} className="course-card">
               <h3>{course.title}</h3>
-              <span className="course-code" style={{ direction: 'ltr', display: 'inline-block' }}>{course.code}</span>
+              <span className="course-code">{t(course.code)}</span>
               <div className="course-details">
                 <span>👨‍🏫 {course.professor}</span>
-                <span style={{ direction: 'ltr' }}>⏱️ {course.time}</span>
+                <span>⏱️ {t(course.time)}</span>
               </div>
             </div>
           ))}

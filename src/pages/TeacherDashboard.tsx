@@ -45,7 +45,6 @@ const TeacherDashboard = () => {
           className="course-selector"
           value={activeCourse}
           onChange={(e) => setActiveCourse(e.target.value)}
-          style={{ direction: 'ltr' }}
         >
           <option value="CE302">CE302 - Project-Based Learning</option>
           <option value="CE315">CE315 - Web App Development</option>
@@ -67,7 +66,7 @@ const TeacherDashboard = () => {
           <tbody>
             {roster.map((student) => (
               <tr key={student.id}>
-                <td className="student-id" style={{ direction: 'ltr', textAlign: 'start' }}>{student.id}</td>
+                <td className="student-id">{t(student.id)}</td>
                 <td className="student-name">{student.name}</td>
                 <td>
                   <select 

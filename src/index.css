@@ -1,9 +1,12 @@
 /* =========================================
    1. PREMIUM LOCALIZED FONTS IMPORT
    ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Vazirmatn:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
 
 :root {
+  /* Inform the browser engine this is the light theme */
+  color-scheme: light;
+  
   /* Light Mode Palette */
   --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
   --glass-bg: rgba(255, 255, 255, 0.7);
@@ -20,6 +23,9 @@
 }
 
 [data-theme='dark'] {
+  /* Inform the browser engine to use dark native UI (dropdowns, scrollbars) */
+  color-scheme: dark;
+  
   /* Dark Mode Palette */
   --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
   --glass-bg: rgba(30, 41, 59, 0.6);
@@ -37,18 +43,18 @@
    ========================================= */
 [dir='rtl'] {
   /* Premium Academic RTL Font Stack */
-  --font-family: 'Vazirmatn', 'Alexandria', sans-serif;
+  --font-family: 'Noto Sans Arabic', Tahoma, sans-serif;
   letter-spacing: 0;
 }
 
-/* Accent headers look incredible using Alexandria font */
+/* Accent headers look incredible and formal using Naskh font */
 [dir='rtl'] h1, [dir='rtl'] h2, [dir='rtl'] h3 {
-  font-family: 'Alexandria', sans-serif;
+  font-family: 'Noto Naskh Arabic', serif;
   font-weight: 700;
 }
 
 /* =========================================
-   3. BASE HTML ELEMENTS
+   3. BASE HTML ELEMENTS & FORM RESETS
    ========================================= */
 * {
   box-sizing: border-box;
@@ -67,6 +73,13 @@ body {
   /* Font smoothing for ultra-crisp display on high-res laptops */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Explicitly force option tags to adopt the theme's solid background */
+option {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: var(--font-family);
 }
 
 /* =========================================

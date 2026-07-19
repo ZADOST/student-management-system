@@ -8,7 +8,7 @@ interface SettingsContextType {
   language: Language;
   toggleTheme: () => void;
   changeLanguage: (lang: Language) => void;
-  t: (key: string | number) => string; // Updated type parameter to cleanly intercept plain numbers
+  t: (key: string | number) => string;
 }
 
 const translations = {
@@ -123,7 +123,7 @@ const translations = {
     loggedInAs: "چوویتە ژوورەوە وەک",
     studentId: "ژمارەی قوتابی",
     todayAttendance: "ئامادەبوونی ئەمڕۆ",
-    currentGrade: "نمرەی ئێستا (%)",
+    currentGrade: "نمرەی ئێستا (٪)",
     actions: "کردارەکان",
     update: "نوێکردنەوە",
     present: "ئامادە",
@@ -185,7 +185,7 @@ const translations = {
     loggedInAs: "تم تسجيل الدخول باسم",
     studentId: "رقم الطالب",
     todayAttendance: "حضور اليوم",
-    currentGrade: "الدرجة الحالية (%)",
+    currentGrade: "الدرجة الحالية (٪)",
     actions: "الإجراءات",
     update: "تحديث",
     present: "حاضر",
@@ -226,20 +226,18 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
   const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
   const changeLanguage = (lang: Language) => setLanguage(lang);
   
-  // The Conversion Engine: Translates words AND automatically maps Western digits to Eastern Arabic digits
   const t = (key: string | number): string => {
+    if (key === undefined || key === null) return '';
     const stringKey = String(key);
     
-    // Look up words in dictionaries
     const translatedText = translations[language][stringKey as keyof typeof translations['en']] || stringKey;
     
-    // If language is English, return directly
     if (language === 'en') return translatedText;
     
-    // If language is Kurdish or Arabic, map numbers to Eastern numeric systems
-    return translatedText.replace(/[0-9]/g, (digit) => {
-      return ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'][parseInt(digit)];
-    });
+    // Map Western digits to Eastern Arabic numerals AND replace % with the Arabic ٪
+    return translatedText
+      .replace(/[0-9]/g, (digit) => ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'][parseInt(digit)])
+      .replace('%', '٪');
   };
 
   return (

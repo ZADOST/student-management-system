@@ -57,19 +57,20 @@ const AdminDashboard = () => {
       <div className="admin-grid">
         <div className="admin-stat-card">
           <div className="admin-stat-title">{t('totalStudents')}</div>
-          <div className="admin-stat-value">{stats.totalStudents}</div>
+          {/* Numbers Wrapped */}
+          <div className="admin-stat-value">{t(stats.totalStudents)}</div>
         </div>
         <div className="admin-stat-card">
           <div className="admin-stat-title">{t('activeFaculty')}</div>
-          <div className="admin-stat-value">{stats.activeFaculty}</div>
+          <div className="admin-stat-value">{t(stats.activeFaculty)}</div>
         </div>
         <div className="admin-stat-card">
           <div className="admin-stat-title">{t('registeredDepts')}</div>
-          <div className="admin-stat-value">{stats.departments}</div>
+          <div className="admin-stat-value">{t(stats.departments)}</div>
         </div>
         <div className="admin-stat-card">
           <div className="admin-stat-title">{t('serverUptime')}</div>
-          <div className="admin-stat-value" style={{ direction: 'ltr' }}>{stats.serverUptime}</div>
+          <div className="admin-stat-value">{t(stats.serverUptime)}</div>
         </div>
       </div>
 
@@ -91,6 +92,7 @@ const AdminDashboard = () => {
                 {users.map((u) => (
                   <tr key={u.id}>
                     <td style={{ fontWeight: 600 }}>{u.name}</td>
+                    {/* Kept email LTR because English emails must never be mirrored */}
                     <td style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', direction: 'ltr', textAlign: 'start' }}>{u.email}</td>
                     <td>{u.department}</td>
                     <td>
@@ -117,12 +119,12 @@ const AdminDashboard = () => {
           <h2>{t('auditLog')}</h2>
           <ul className="audit-log">
             <li className="audit-item">
-              <span className="audit-time">10:45 AM</span>
+              <span className="audit-time">{t('10:45')} AM</span>
               <p className="audit-message">Automated MoHE attendance roster sync completed successfully.</p>
             </li>
             <li className="audit-item">
-              <span className="audit-time">09:12 AM</span>
-              <p className="audit-message">System Administrator elevated user ID #452 to Faculty status.</p>
+              <span className="audit-time">{t('09:12')} AM</span>
+              <p className="audit-message">System Administrator elevated user ID #{t('452')} to Faculty status.</p>
             </li>
           </ul>
         </div>
