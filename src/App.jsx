@@ -2,32 +2,39 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+
+// Import our new pages
+import Home from './pages/Home';
 import Login from './pages/Login';
+import Register from './pages/Register';
 
 // Mock components for demonstration
 const Unauthorized = () => <div className="p-6 text-red-600 text-xl font-bold">403 - Unauthorized Access</div>;
-const PublicHome = () => <div className="p-6 text-xl">Welcome to the Student Management System. Please log in.</div>;
 const AdminDashboard = () => <div className="p-6 text-xl font-bold text-purple-700">Admin Dashboard - Full Access</div>;
 const TeacherDashboard = () => <div className="p-6 text-xl font-bold text-green-700">Teacher Dashboard - Gradebook Access</div>;
 const StudentDashboard = () => <div className="p-6 text-xl font-bold text-blue-700">Student Dashboard - View Only</div>;
 
-// A small navbar component to show conditional rendering based on auth state
+// The Navigation Bar
 const NavBar = () => {
   const { user, logout } = useAuth();
   
   return (
-    <nav className="bg-gray-800 text-white p-4 flex justify-between">
-      <div className="flex gap-4">
-        <Link to="/" className="hover:text-gray-300">Home</Link>
-        {user?.role === 'admin' && <Link to="/admin" className="hover:text-gray-300">Admin Area</Link>}
-        {user?.role === 'teacher' && <Link to="/teacher" className="hover:text-gray-300">Teacher Area</Link>}
-        {user?.role === 'student' && <Link to="/student" className="hover:text-gray-300">My Portal</Link>}
+    <nav style={{ background: '#1f2937', color: 'white', padding: '1rem', display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', gap: '1rem' }}>
+        <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
+        {user?.role === 'admin' && <Link to="/admin" style={{ color: 'white', textDecoration: 'none' }}>Admin Area</Link>}
+        {user?.role === 'teacher' && <Link to="/teacher" style={{ color: 'white', textDecoration: 'none' }}>Teacher Area</Link>}
+        {user?.role === 'student' && <Link to="/student" style={{ color: 'white', textDecoration: 'none' }}>My Portal</Link>}
       </div>
       <div>
         {user ? (
-          <button onClick={logout} className="bg-red-500 px-3 py-1 rounded hover:bg-red-600">Logout ({user.role})</button>
+          <button onClick={logout} style={{ background: '#ef4444', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '4px', cursor: 'pointer' }}>
+            Logout ({user.role})
+          </button>
         ) : (
-          <Link to="/login" className="bg-blue-500 px-3 py-1 rounded hover:bg-blue-600">Login</Link>
+          <Link to="/login" style={{ background: '#3b82f6', color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '4px' }}>
+            Login
+          </Link>
         )}
       </div>
     </nav>
@@ -43,8 +50,9 @@ function App() {
           <main>
             <Routes>
               {/* Public Routes */}
-              <Route path="/" element={<PublicHome />} />
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/unauthorized" element={<Unauthorized />} />
 
               {/* Protected Routes: ADMIN ONLY */}
