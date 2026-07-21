@@ -1,63 +1,39 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import { SettingsProvider } from './context/SettingsContext';
-import ProtectedRoute from './components/ProtectedRoute';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-
-// Application Pages
-import Home from './pages/Home';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
-import Register from './pages/Register';
 import StudentDashboard from './pages/StudentDashboard';
+import StudentCourses from './pages/student/Courses';
+import StudentAttendance from './pages/student/Attendance';
 import TeacherDashboard from './pages/TeacherDashboard';
-import AdminDashboard from './pages/AdminDashboard';
+import TeacherClasses from './pages/teacher/Classes';
+import TeacherGrading from './pages/teacher/Grading';
+import PrincipalDashboard from './pages/PrincipalDashboard';
+import PrincipalUsers from './pages/principal/Users';
+import PrincipalPayroll from './pages/principal/Payroll';
+import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 
-// Fallback component
-const Unauthorized = () => (
-  <div style={{ padding: '2rem', color: 'red', textAlign: 'center', fontWeight: 'bold' }}>
-    403 - Unauthorized Access
-  </div>
-);
+export default function App() {
+  const { i18n } = useTranslation();
 
-function App() {
+  useEffect(() => {
+    // Ensure body has the correct dark/light classes if we implement theme toggling later
+  }, []);
+
   return (
-    <AuthProvider>
-      <SettingsProvider>
-        <Router>
-          <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <Navbar />
-            <main style={{ flex: '1' }}>
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/unauthorized" element={<Unauthorized />} />
-
-                {/* Protected Routes: ADMIN ONLY */}
-                <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-                  <Route path="/admin" element={<AdminDashboard />} />
-                </Route>
-
-                {/* Protected Routes: TEACHERS & ADMINS */}
-                <Route element={<ProtectedRoute allowedRoles={['admin', 'teacher']} />}>
-                  <Route path="/teacher" element={<TeacherDashboard />} />
-                </Route>
-
-                {/* Protected Routes: STUDENTS ONLY */}
-                <Route element={<ProtectedRoute allowedRoles={['student']} />}>
-                  <Route path="/student" element={<StudentDashboard />} />
-                </Route>
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-        </Router>
-      </SettingsProvider>
-    </AuthProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/student" element={<StudentDashboard />} />
+        <Route path="/student/courses" element={<StudentCourses />} />
+        <Route path="/student/attendance" element={<StudentAttendance />} />
+        <Route path="/teacher" element={<TeacherDashboard />} />
+        <Route path="/teacher/classes" element={<TeacherClasses />} />
+        <Route path="/teacher/grades" element={<TeacherGrading />} />
+        <Route path="/principal" element={<PrincipalDashboard />} />
+        <Route path="/principal/users" element={<PrincipalUsers />} />
+        <Route path="/principal/payroll" element={<PrincipalPayroll />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
   );
 }
-
-export default App;
